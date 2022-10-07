@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'frame.dart';
+import 'frame/index.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
         Color(0xFFF8FBFF),
         Color(0xFFFCFDFD),
       ])),
-      child: Scaffold(
+      child: const Scaffold(
         backgroundColor: Colors.transparent,
         body: HomeFrame(),
       ),

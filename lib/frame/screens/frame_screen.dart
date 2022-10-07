@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'todolist/index.dart';
-import 'utils/responsive_layout.dart';
+import 'package:todoschedule/settings/screens/index.dart';
+import 'package:todoschedule/utils/responsive_layout.dart';
+import 'package:todoschedule/todolist/index.dart';
+import '../index.dart';
 
 class HomeFrame extends StatefulWidget {
   const HomeFrame({super.key});
@@ -12,25 +14,31 @@ class HomeFrame extends StatefulWidget {
 class _HomeFrameState extends State<HomeFrame> {
   @override
   Widget build(BuildContext context) {
-    return ResponsiveLayout(
-        largeScreen: Center(
-          child: Column(
-            children: const [
-              NavBar(),
-              ContentFrame(),
-              Text("This is a large screen")
-            ],
-          ),
-        ),
-        smallScreen: Center(
-          child: Column(
-            children: const [
-              NavBar(),
-              ContentFrame(),
-              Text("This is a small screen")
-            ],
-          ),
-        ));
+    return ChangeNotifierProvider<FrameProvider>(
+        create: (_) => FrameProvider(),
+        builder: (context, child) {
+          return ResponsiveLayout(
+              largeScreen: Center(
+                child: Column(
+                  children: const [
+                    NavBar(),
+                    Expanded(child: ContentFrame()),
+                    // Text("This is a large screen")
+                  ],
+                ),
+              ),
+              smallScreen: ResponsivePlatform(
+                webScreen: Scaffold(
+                  bottomNavigationBar: const NavBar(),
+                  body: Column(
+                    children: const [
+                      ContentFrame(),
+                      // Text(context.watch<FrameProvider>().navBarIndex.toString()),
+                    ],
+                  ),
+                ),
+              ));
+        });
   }
 }
 
@@ -42,18 +50,18 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
-  int _selectedScreenIndex = 0;
-
+  int _currentIndex = 0;
   void _selectScreen(int index) {
     setState(() {
-      _selectedScreenIndex = index;
+      _currentIndex = index;
+      context.read<FrameProvider>().setIndex(index);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return NavigationBar(
-        selectedIndex: _selectedScreenIndex,
+        selectedIndex: _currentIndex,
         onDestinationSelected: _selectScreen,
         labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
         destinations: const [
@@ -71,9 +79,16 @@ class ContentFrame extends StatefulWidget {
 }
 
 class _ContentFrameState extends State<ContentFrame> {
+  final List<Widget> _listOfScreens = [
+    //List of Screens
+    const TodolistScreen(),
+    const SettingsScreen(),
+  ];
   @override
   Widget build(BuildContext context) {
-    return Container(child: TodolistScreen());
+    return _listOfScreens[context
+        .watch<FrameProvider>()
+        .navBarIndex]; // return _listOfScreens[context.watch<FrameProvider>().navBarIndex];
   }
 }
 
@@ -87,3 +102,4 @@ class _ContentFrameState extends State<ContentFrame> {
 // final isWebMobile = kIsWeb &&
 //     (defaultTargetPlatform == TargetPlatform.iOS ||
 //         defaultTargetPlatform == TargetPlatform.android);
+

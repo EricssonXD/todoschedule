@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show defaultTargetPlatform, kIsWeb;
 
-enum PlatformType {
+enum _PlatformType {
   // ignore_for_file: constant_identifier_names
   Web,
   WebMobile,
@@ -57,8 +56,8 @@ class ResponsiveLayout extends StatelessWidget {
 }
 
 class _PlatformDetector {
-  PlatformType _platformName = PlatformType.NOTFOUND;
-  PlatformType get platform => _platformName;
+  _PlatformType _platformName = _PlatformType.NOTFOUND;
+  _PlatformType get platform => _platformName;
   final _isWebMobile = kIsWeb &&
       (defaultTargetPlatform == TargetPlatform.iOS ||
           defaultTargetPlatform == TargetPlatform.android);
@@ -66,24 +65,24 @@ class _PlatformDetector {
   _PlatformDetector() {
     print("Checking Platform");
     if (_isWebMobile) {
-      _platformName = PlatformType.WebMobile;
+      _platformName = _PlatformType.WebMobile;
     } else if (kIsWeb) {
-      _platformName = PlatformType.Web;
+      _platformName = _PlatformType.Web;
     } else {
       if (Platform.isAndroid) {
-        _platformName = PlatformType.Android;
+        _platformName = _PlatformType.Android;
       } else if (Platform.isIOS) {
-        _platformName = PlatformType.IOS;
+        _platformName = _PlatformType.IOS;
       } else if (Platform.isFuchsia) {
-        _platformName = PlatformType.Fuchsia;
+        _platformName = _PlatformType.Fuchsia;
       } else if (Platform.isLinux) {
-        _platformName = PlatformType.Linux;
+        _platformName = _PlatformType.Linux;
       } else if (Platform.isMacOS) {
-        _platformName = PlatformType.MacOS;
+        _platformName = _PlatformType.MacOS;
       } else if (Platform.isWindows) {
-        _platformName = PlatformType.Windows;
+        _platformName = _PlatformType.Windows;
       } else {
-        print("Ummm Huh??? Cannot Find Platform");
+        // print("Ummm Huh??? Cannot Find Platform");
       }
     }
   }

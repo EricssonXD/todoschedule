@@ -2,53 +2,54 @@
 import 'dart:convert';
 
 class TodolistModel {
-  String? s;
-  int? n;
+  String? task;
+  bool? completed;
   TodolistModel({
-    this.s,
-    this.n,
+    this.task,
+    this.completed = false,
   });
 
-  TodolistModel copyWith({
-    String? s,
-    int? n,
-  }) {
-    return TodolistModel(
-      s: s ?? this.s,
-      n: n ?? this.n,
-    );
-  }
+  // TodolistModel copyWith({
+  //   String? task,
+  //   int? completed,
+  // }) {
+  //   return TodolistModel(
+  //     task: task ?? this.task,
+  //     completed: completed ?? this.completed,
+  //   );
+  // }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      's': s,
-      'n': n,
+      'task': task,
+      'completed': completed,
     };
   }
 
   factory TodolistModel.fromMap(Map<String, dynamic> map) {
     return TodolistModel(
-      s: map['s'] != null ? map['s'] as String : null,
-      n: map['n'] != null ? map['n'] as int : null,
+      task: map['task'] != null ? map['task'] as String : null,
+      completed: map['completed'] != null ? map['completed'] as bool : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory TodolistModel.fromJson(String source) => TodolistModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory TodolistModel.fromJson(String source) =>
+      TodolistModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'TodolistModel(s: $s, n: $n)';
+  String toString() => 'TodolistModel(task: $task, completed: $completed)';
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-  
-    return other is TodolistModel &&
-      other.s == s &&
-      other.n == n;
-  }
+  // @override
+  // bool operator ==(Object other) {
+  //   if (identical(this, other)) return true;
 
-  @override
-  int get hashCode => s.hashCode ^ n.hashCode;
+  //   return other is TodolistModel &&
+  //       other.task == task &&
+  //       other.completed == completed;
+  // }
+
+  // @override
+  // int get hashCode => task.hashCode ^ completed.hashCode;
 }
