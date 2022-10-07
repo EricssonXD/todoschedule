@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoschedule/todolist/providers/index.dart';
 import 'frame/index.dart';
 
 void main() {
@@ -10,12 +11,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'TodoSchedule',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<TodolistProvider>(
+            create: (_) => TodolistProvider()),
+      ],
+      child: MaterialApp(
+        title: 'TodoSchedule',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const HomePage(),
       ),
-      home: const HomePage(),
     );
   }
 }

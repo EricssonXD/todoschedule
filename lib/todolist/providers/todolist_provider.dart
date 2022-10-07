@@ -11,7 +11,7 @@ class TodolistProvider with ChangeNotifier {
   get todoList => _todolist;
 
   TodolistProvider() {
-    print("init shit");
+    // print("init shit");
     _loadFromPrefs();
   }
 
@@ -26,7 +26,7 @@ class TodolistProvider with ChangeNotifier {
       _todolist =
           listString.map((item) => TodolistModel.fromJson(item)).toList();
     }
-    print(_todolist[0].toString());
+    // print("Loaded ${_todolist.length} Items");
     notifyListeners();
   }
 
@@ -34,11 +34,26 @@ class TodolistProvider with ChangeNotifier {
     await _initPrefs();
     List<String> stringList = _todolist.map((item) => item.toJson()).toList();
     _pref.setStringList(_key, stringList);
+    notifyListeners();
   }
 
   addTodo({task}) {
     _todolist.insert(0, TodolistModel(task: task));
-    print(_todolist.length);
+    _saveToPrefs();
+  }
+
+  deleteTodo(item) {
+    _todolist.remove(item);
+    _saveToPrefs();
+  }
+
+  editTodo({required TodolistModel item, String? task, bool? completed}) {
+    item.completed = completed ?? item.completed;
+    item.task = task ?? item.task;
+    _saveToPrefs();
+  }
+
+  saveData() {
     _saveToPrefs();
   }
   // Future<void> fetchData({required String n}) async {

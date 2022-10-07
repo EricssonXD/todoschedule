@@ -32,7 +32,7 @@ class _HomeFrameState extends State<HomeFrame> {
                   bottomNavigationBar: const NavBar(),
                   body: Column(
                     children: const [
-                      ContentFrame(),
+                      Expanded(child: ContentFrame()),
                       // Text(context.watch<FrameProvider>().navBarIndex.toString()),
                     ],
                   ),

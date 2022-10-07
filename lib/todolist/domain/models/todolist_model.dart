@@ -2,10 +2,10 @@
 import 'dart:convert';
 
 class TodolistModel {
-  String? task;
-  bool? completed;
+  String task;
+  bool completed;
   TodolistModel({
-    this.task,
+    required this.task,
     this.completed = false,
   });
 
@@ -28,8 +28,8 @@ class TodolistModel {
 
   factory TodolistModel.fromMap(Map<String, dynamic> map) {
     return TodolistModel(
-      task: map['task'] != null ? map['task'] as String : null,
-      completed: map['completed'] != null ? map['completed'] as bool : null,
+      task: map['task'] != null ? map['task'] as String : "",
+      completed: map['completed'] != null ? map['completed'] as bool : false,
     );
   }
 

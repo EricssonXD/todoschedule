@@ -63,6 +63,7 @@ class _PlatformDetector {
           defaultTargetPlatform == TargetPlatform.android);
 
   _PlatformDetector() {
+    // ignore: avoid_print
     print("Checking Platform");
     if (_isWebMobile) {
       _platformName = _PlatformType.WebMobile;
